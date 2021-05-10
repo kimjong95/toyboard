@@ -10,30 +10,32 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BoardMenu extends DomainEntity {
+public class Board extends DomainEntity {
     //
     private String name;
     private String creator;
     private long createTime;
     private long updatedTime;
+    private String boardMenuId;
 
-    public BoardMenu(String id) {
-        super(id);
-    }
-
-    public BoardMenu(String id, String name, String idName) {
-        super(id);
-        this.name = name;
-        this.creator = idName;
-    }
-
-    public static BoardMenu sample() {
+    public Board(String id) {
         //
-        return new BoardMenu("id", "name", "CreatorId");
+        super(id);
+    }
+
+    public Board(String id, String creator, String boardMenuId) {
+        //
+        super(id);
+        this.creator = creator;
+        this.boardMenuId = boardMenuId;
+    }
+
+    public static Board sample() {
+        return new Board("id", "creatorId", "boardMenuId");
     }
 
     public static void main(String[] args) {
         //
-        System.out.println(JsonUtil.toJson(BoardMenu.sample()));
+        System.out.println(JsonUtil.toJson(Board.sample()));
     }
 }

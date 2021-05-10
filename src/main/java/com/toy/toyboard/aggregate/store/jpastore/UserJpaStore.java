@@ -1,7 +1,7 @@
 package com.toy.toyboard.aggregate.store.jpastore;
 
 import com.toy.toyboard.aggregate.store.UserStore;
-import com.toy.toyboard.aggregate.store.jpastore.jpo.UserJpo;
+import com.toy.toyboard.aggregate.store.jpastore.jpo.user.UserJpo;
 import com.toy.toyboard.aggregate.store.jpastore.repository.UserRepository;
 import com.toy.toyboard.entity.user.User;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +20,17 @@ public class UserJpaStore implements UserStore {
     @Override
     public User create(User user) {
         UserJpo userJpo = new UserJpo(user);
-        System.out.println(user.getId());
-        System.out.println(user.getName());
+        userJpo.setCreateTime(System.currentTimeMillis());
         userRepository.save(userJpo);
         return userJpo.toDomain();
     }
 
     @Override
     public User update(User user) {
-        return null;
+        UserJpo userJpo = new UserJpo(user);
+        userJpo.setUpdatedTime(System.currentTimeMillis());
+        userRepository.save(userJpo);
+        return userJpo.toDomain();
     }
 
     @Override
@@ -39,10 +41,7 @@ public class UserJpaStore implements UserStore {
     @Override
     public User retrieveById(String id) {
         Optional<UserJpo> userJpoOptional = userRepository.findById(id);
-        if(!userJpoOptional.isPresent()) {
-            return null;
-        }
-        return userJpoOptional.get().toDomain();
+        return userJpoOptional.map(UserJpo::toDomain).orElse(null);
     }
 
     @Override

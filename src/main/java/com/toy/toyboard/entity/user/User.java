@@ -1,29 +1,36 @@
 package com.toy.toyboard.entity.user;
 
 import com.google.gson.Gson;
+import com.toy.toyboard.entity.shared.DomainEntity;
 import com.toy.toyboard.shared.JsonUtil;
 import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
-    private String id;
-
+public class User extends DomainEntity {
+    //
     private String name;
     private String password;
     private String nickname;
     private Role role;
     private long createTime;
+    private long updatedTime;
 
     public User(String id) {
-        this.id = id;
+        super(id);
+    }
+
+    public User(String id, String password, String nickname, Role role) {
+        super(id);
+        this.password = password;
+        this.nickname = nickname;
+        this.role = role;
     }
 
     public static User sample() {
         //
-        return new User("000001", "홍길동", "passw@rd", "조선최강검", Role.MEMBER, 0);
+        return new User( "홍길동", "passw@rd", "조선최강검", Role.MEMBER);
     }
 
     public static void main(String[] args) {

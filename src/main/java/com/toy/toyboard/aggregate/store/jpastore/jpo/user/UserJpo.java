@@ -1,5 +1,6 @@
-package com.toy.toyboard.aggregate.store.jpastore.jpo;
+package com.toy.toyboard.aggregate.store.jpastore.jpo.user;
 
+import com.toy.toyboard.aggregate.store.jpastore.jpo.shared.DomainEntityJpo;
 import com.toy.toyboard.entity.user.Role;
 import com.toy.toyboard.entity.user.User;
 import lombok.Getter;
@@ -10,16 +11,11 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "USER")
-public class UserJpo {
+public class UserJpo extends DomainEntityJpo {
     //
-    @Id
-    protected String id;
-    @Version
-    protected long entityVersion;
-
     private String name;
     private String password;
     private String nickname;
@@ -27,10 +23,11 @@ public class UserJpo {
     @Enumerated(EnumType.STRING)
     private Role role;
     private long createTime;
+    private long updatedTime;
 
     public UserJpo(User user) {
         //
-        this.id = user.getId();
+        super(user.getId());
         this.name = user.getName();
         this.password = user.getPassword();
         this.nickname = user.getNickname();
