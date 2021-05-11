@@ -33,4 +33,16 @@ public class BoardMenuResources {
         //
         return boardMenuLogic.findById(id);
     }
+
+    @PutMapping("/{id}")
+    public BoardMenu modify(@PathVariable String id, @RequestBody BoardMenu boardMenu) {
+        //
+        return boardMenuLogic.modify(boardMenu);
+    }
+
+    @DeleteMapping("/{id}")
+    public void remove(@PathVariable String id) {
+        //
+        boardMenuLogic.remove(id);
+    }
 }
